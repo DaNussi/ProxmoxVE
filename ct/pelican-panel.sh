@@ -3,7 +3,7 @@ source <(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxV
 # Copyright (c) 2021-2025 community-scripts ORG
 # Author: bvdberg01
 # License: MIT | https://github.com/community-scripts/ProxmoxVE/raw/main/LICENSE
-# Source: https://github.com/pelican-dev/panel
+# Source: https://github.com/DaNussi/panel
 
 APP="Pelican-Panel"
 var_tags="${var_tags:-Gaming}"
@@ -43,7 +43,7 @@ function update_script() {
     msg_ok "Migrated PHP $CURRENT_PHP to 8.4"
   fi
 
-  RELEASE=$(curl -fsSL https://api.github.com/repos/pelican-dev/panel/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
+  RELEASE=$(curl -fsSL https://api.github.com/repos/DaNussi/panel/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
   if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]]; then
     msg_info "Stopping Service"
     cd /opt/pelican-panel
@@ -55,7 +55,7 @@ function update_script() {
     SQLITE_INSTALL=$(ls /opt/pelican-panel/database/*.sqlite 1>/dev/null 2>&1 && echo "true" || echo "false")
     $SQLITE_INSTALL && cp -r /opt/pelican-panel/database/*.sqlite /opt/
     rm -rf * .*
-    curl -fsSL "https://github.com/pelican-dev/panel/releases/download/v${RELEASE}/panel.tar.gz" -o $(basename "https://github.com/pelican-dev/panel/releases/download/v${RELEASE}/panel.tar.gz")
+    curl -fsSL "https://github.com/DaNussi/panel/releases/download/v${RELEASE}/panel.tar.gz" -o $(basename "https://github.com/DaNussi/panel/releases/download/v${RELEASE}/panel.tar.gz")
     tar -xzf "panel.tar.gz"
     mv /opt/.env /opt/pelican-panel/
     $SQLITE_INSTALL && mv /opt/*.sqlite /opt/pelican-panel/database/
